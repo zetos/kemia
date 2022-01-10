@@ -51,5 +51,5 @@ test('PDH of 11 Muse Fruit returns 0.432', (t) => {
 });
 
 test('PDH of 11 Sea Dew Leaves + 1 Muse Fruit returns 2.508', (t) => {
-  t.is(mix(rcp1).pdh, 2.508);
+  t.is(mix(rcp3).pdh, 2.508);
 });
