@@ -30,7 +30,8 @@
     "typeRoots": ["./node_modules/@types"],
     "exclude": [
       "node_modules",
-      "src/**/*.test.ts"
+      "src/**/*.test.ts",
+      "src/*.test.ts"
     ],
     "include": [
       "./src/**/*.ts"
