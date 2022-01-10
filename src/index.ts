@@ -47,13 +47,10 @@ const mix = ({ base, multipliers }: Recipe): Potion => {
     ((base.Dh * base.qtd) / dissolution + multDH) *
     (1 + Math.sqrt(base.qtd / dissolution) * base.DhMult);
 
-  const PRECISION = 1e3;
-
   return {
-    pdh:
-      Math.round(
-        calcDH * (totalMultipliers ? totalMultipliers : 1) * PRECISION
-      ) / PRECISION,
+    pdh: Number(
+      (calcDH * (totalMultipliers ? totalMultipliers : 1)).toFixed(3)
+    ),
     pu,
   };
 };
