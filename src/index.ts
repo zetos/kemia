@@ -41,9 +41,9 @@ const mix = ({ base, multipliers }: Recipe): Potion => {
   // 15 PU - Minor Vial
   // 40 PU - Medium Vial
 
-  const PU =
-    base.Aw * base.qtd +
-    multipliers.reduce((acc, cur) => cur.Aw * cur.qtd + acc, 0);
+  const AW = base.Aw * base.qtd;
+  const PU = (AW / 10) % 2 ? (AW / 10) | 0 : AW / 10 - 1;
+  // multipliers.reduce((acc, cur) => cur.Aw * cur.qtd + acc, 0);
 
   console.log('PU:', PU);
   const loreFactor = (5 / 3) * 1.2; // 2
