@@ -1,4 +1,4 @@
-type Recipe = {
+export type Recipe = {
   base: {
     qtd: number;
     name: string;
@@ -16,36 +16,18 @@ type Recipe = {
   }[];
 };
 
-type Potion = { HealingPerPU: number; PU: number };
-
-const recipe: Recipe = {
-  base: {
-    name: 'Sea Dew Leaves',
-    qtd: 11,
-    Dh: 1.2,
-    Aw: 1,
-    DhMult: 0,
-  },
-  multipliers: [
-    {
-      name: 'Muse Fruit',
-      qtd: 1,
-      Dh: 0.15,
-      DhMult: 0.44,
-      Aw: 1,
-    },
-  ],
-};
+export type Potion = { pdh: number; pu: number };
 
 const mix = ({ base, multipliers }: Recipe): Potion => {
   // 15 PU - Minor Vial
   // 40 PU - Medium Vial
 
-  const AW = base.Aw * base.qtd;
-  const PU = (AW / 10) % 2 ? (AW / 10) | 0 : AW / 10 - 1;
-  // multipliers.reduce((acc, cur) => cur.Aw * cur.qtd + acc, 0);
+  const AW =
+    base.Aw * base.qtd +
+    multipliers.reduce((acc, cur) => cur.Aw * cur.qtd + acc, 0);
 
-  console.log('PU:', PU);
+  const pu = (AW / 10) % 2 ? (AW / 10) | 0 : AW / 10 - 1;
+
   const loreFactor = (5 / 3) * 1.2; // 2
   const dissolution =
     base.qtd + multipliers.reduce((acc, cur) => acc + cur.qtd, 0);
@@ -60,21 +42,20 @@ const mix = ({ base, multipliers }: Recipe): Potion => {
     0
   );
 
-  console.log('multDH:', multDH);
+  const calcDH =
+    loreFactor *
+    ((base.Dh * base.qtd) / dissolution + multDH) *
+    (1 + Math.sqrt(base.qtd / dissolution) * base.DhMult);
 
-  const calcDH = Number(
-    (
-      loreFactor *
-      (base.Dh + multDH) *
-      (base.qtd / dissolution) *
-      (1 + Math.sqrt(base.qtd / dissolution) * base.DhMult)
-    ).toFixed(3)
-  );
+  const PRECISION = 1e3;
 
   return {
-    HealingPerPU: calcDH * (totalMultipliers ? totalMultipliers : 0),
-    PU,
+    pdh:
+      Math.round(
+        calcDH * (totalMultipliers ? totalMultipliers : 1) * PRECISION
+      ) / PRECISION,
+    pu,
   };
 };
 
-console.log('mix:', mix(recipe));
+export { mix };
