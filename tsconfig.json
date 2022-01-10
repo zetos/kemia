@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+      "target": "ES2021",
+      "module": "commonjs",
+      "lib": [
+        "es6",
+        "es2017",
+        "es2018",
+        "ES2019",
+        "ES2020",
+        "ES2021",
+        "DOM"
+      ],
+      "sourceMap": true,
+      "outDir": "./dist",
+      "removeComments": true,
+      "noImplicitAny": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "baseUrl": "./src"
+      },
+    "typeRoots": ["./node_modules/@types"],
+    "exclude": [
+      "node_modules",
+      "src/**/*.test.ts"
+    ],
+    "include": [
+      "./src/**/*.ts"
+    ]
+  }
