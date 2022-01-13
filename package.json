@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node-dev --respawn src/index.ts",
     "test": "ava src",
-    "test:w": "ava src --watch"
+    "test:w": "ava src --watch",
+    "coverage": "c8 ava"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "ava": "^4.0.1",
+    "c8": "^7.11.0",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -25,12 +27,11 @@
     "typescript": "^4.5.4"
   },
   "ava": {
-		"extensions": [
-			"ts"
-		],
-		"require": [
-			"ts-node/register"
-		]
-	}
-  
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  }
 }
