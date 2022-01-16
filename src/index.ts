@@ -1,3 +1,5 @@
+import { pipe, Box } from './util';
+
 type Ingredient = {
   readonly name: string;
   readonly qtd: number;
@@ -24,41 +26,57 @@ export type Recipe = {
 
 export type Potion = { pdh: number; pu: number };
 
-const mix = ({ base, multipliers }: Recipe): Potion => {
-  // 15 PU - Minor Vial
-  // 40 PU - Medium Vial
+// 15 PU - Minor Vial
+// 40 PU - Medium Vial
+const calcPotionUnit = (recipe: Recipe): number =>
+  Box(recipe)
+    .map(
+      ({ base, multipliers }) =>
+        base.aw * base.qtd +
+        multipliers.reduce((acc, cur) => cur.aw * cur.qtd + acc, 0)
+    )
+    .fold((totalAW) =>
+      (totalAW / 10) % 2 ? (totalAW / 10) | 0 : totalAW / 10 - 1
+    );
 
-  const AW =
-    base.aw * base.qtd +
-    multipliers.reduce((acc, cur) => cur.aw * cur.qtd + acc, 0);
+const calcTotalDissolution = ({ base, multipliers }: Recipe) =>
+  base.qtd + multipliers.reduce((acc, cur) => acc + cur.qtd, 0);
 
-  const pu = (AW / 10) % 2 ? (AW / 10) | 0 : AW / 10 - 1;
-
-  const herbalismFactor = (5 / 3) * 1.2; // 2
-
-  const dissolution =
-    base.qtd + multipliers.reduce((acc, cur) => acc + cur.qtd, 0);
-
-  const totalMultipliers = multipliers.reduce(
+const calcTotalMultipliers = (multipliers: Ingredient[], dissolution: number) =>
+  multipliers.reduce(
     (acc, cur) => acc + (1 + Math.sqrt(cur.qtd / dissolution) * cur.dhm),
     0
   );
 
+const calcDirectHealing = (
+  { base, multipliers }: Recipe,
+  dissolution: number
+): number => {
+  const herbalismFactor = (5 / 3) * 1.2; // 2
   const multDH = multipliers.reduce(
     (acc, cur) => acc + cur.dh * (cur.qtd / dissolution),
     0
   );
 
-  const calcDH =
+  return (
     herbalismFactor *
     ((base.dh * base.qtd) / dissolution + multDH) *
-    (1 + Math.sqrt(base.qtd / dissolution) * base.dhm);
+    (1 + Math.sqrt(base.qtd / dissolution) * base.dhm)
+  );
+};
+
+const mix = ({ base, multipliers }: Recipe): Potion => {
+  const totalDissolution = calcTotalDissolution({ base, multipliers });
+
+  const totalMultipliers = calcTotalMultipliers(multipliers, totalDissolution);
+
+  const calcDH = calcDirectHealing({ base, multipliers }, totalDissolution);
 
   return {
     pdh: Number(
       (calcDH * (totalMultipliers ? totalMultipliers : 1)).toFixed(3)
     ),
-    pu,
+    pu: calcPotionUnit({ base, multipliers }),
   };
 };
 
