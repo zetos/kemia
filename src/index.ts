@@ -1,12 +1,12 @@
-import { pipe, Box } from './util';
+import { Box } from './util';
 
-type Ingredient = {
+export type Ingredient = {
   readonly name: string;
   readonly qtd: number;
   readonly aw: 0 | 1;
-  readonly dh: number;
+  readonly pdh: number;
   readonly dhm: number;
-  readonly dp?: number;
+  readonly pdp?: number;
   readonly hot?: number;
   readonly hotm?: number;
   readonly hl?: number;
@@ -54,13 +54,13 @@ const calcDirectHealing = (
 ): number => {
   const herbalismFactor = (5 / 3) * 1.2; // 2
   const multDH = multipliers.reduce(
-    (acc, cur) => acc + cur.dh * (cur.qtd / dissolution),
+    (acc, cur) => acc + cur.pdh * (cur.qtd / dissolution),
     0
   );
 
   return (
     herbalismFactor *
-    ((base.dh * base.qtd) / dissolution + multDH) *
+    ((base.pdh * base.qtd) / dissolution + multDH) *
     (1 + Math.sqrt(base.qtd / dissolution) * base.dhm)
   );
 };

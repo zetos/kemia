@@ -5,7 +5,7 @@ const rcp1: Recipe = {
   base: {
     name: 'Sea Dew Leaves',
     qtd: 11,
-    dh: 1.2,
+    pdh: 1.2,
     aw: 1,
     dhm: 0,
   },
@@ -16,7 +16,7 @@ const rcp2: Recipe = {
   base: {
     name: 'Muse Fruit',
     qtd: 1,
-    dh: 0.15,
+    pdh: 0.15,
     dhm: 0.44,
     aw: 1,
   },
@@ -27,7 +27,7 @@ const rcp3: Recipe = {
   base: {
     name: 'Sea Dew Leaves',
     qtd: 11,
-    dh: 1.2,
+    pdh: 1.2,
     aw: 1,
     dhm: 0,
   },
@@ -35,7 +35,7 @@ const rcp3: Recipe = {
     {
       name: 'Muse Fruit',
       qtd: 1,
-      dh: 0.15,
+      pdh: 0.15,
       dhm: 0.44,
       aw: 1,
     },
@@ -46,7 +46,7 @@ const rcp4: Recipe = {
   base: {
     name: 'Sea Dew Leaves',
     qtd: 11,
-    dh: 1.2,
+    pdh: 1.2,
     aw: 1,
     dhm: 0,
   },
@@ -54,7 +54,7 @@ const rcp4: Recipe = {
     {
       name: 'Muse Fruit',
       qtd: 100,
-      dh: 0.15,
+      pdh: 0.15,
       dhm: 0.44,
       aw: 1,
     },
@@ -65,7 +65,7 @@ const rcp5: Recipe = {
   base: {
     name: 'Salvia',
     qtd: 85,
-    dh: 1.8,
+    pdh: 1.8,
     aw: 1,
     dhm: 0,
   },
@@ -73,7 +73,7 @@ const rcp5: Recipe = {
     {
       name: 'Muse Fruit',
       qtd: 16,
-      dh: 0.15,
+      pdh: 0.15,
       dhm: 0.44,
       aw: 1,
     },
