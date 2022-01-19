@@ -1,7 +1,7 @@
 import { Box } from './util';
 
 export type Ingredient = {
-  readonly name: string;
+  readonly name?: string;
   readonly qtd: number;
   readonly aw: 0 | 1;
   readonly pdh: number;
@@ -44,7 +44,6 @@ const calcTotalMultipliers = (multipliers: Ingredient[], dissolution: number) =>
       !acc
         ? 1 + Math.sqrt(cur.qtd / dissolution) * cur.dhm
         : acc * (1 + Math.sqrt(cur.qtd / dissolution) * cur.dhm),
-
     0
   );
 
