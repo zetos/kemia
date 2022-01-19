@@ -26,8 +26,6 @@ export type Recipe = {
 
 export type Potion = { pdh: number; pu: number };
 
-// 15 PU - Minor Vial
-// 40 PU - Medium Vial
 const calcPotionUnit = (recipe: Recipe): number =>
   Box(recipe)
     .map(
@@ -35,16 +33,18 @@ const calcPotionUnit = (recipe: Recipe): number =>
         base.aw * base.qtd +
         multipliers.reduce((acc, cur) => cur.aw * cur.qtd + acc, 0)
     )
-    .fold((totalAW) =>
-      (totalAW / 10) % 2 ? (totalAW / 10) | 0 : totalAW / 10 - 1
-    );
+    .fold((totalAW) => ((totalAW - 1) / 10) | 0);
 
 const calcTotalDissolution = ({ base, multipliers }: Recipe) =>
   base.qtd + multipliers.reduce((acc, cur) => acc + cur.qtd, 0);
 
 const calcTotalMultipliers = (multipliers: Ingredient[], dissolution: number) =>
   multipliers.reduce(
-    (acc, cur) => acc + (1 + Math.sqrt(cur.qtd / dissolution) * cur.dhm),
+    (acc, cur) =>
+      !acc
+        ? 1 + Math.sqrt(cur.qtd / dissolution) * cur.dhm
+        : acc * (1 + Math.sqrt(cur.qtd / dissolution) * cur.dhm),
+
     0
   );
 
@@ -80,4 +80,4 @@ const mix = ({ base, multipliers }: Recipe): Potion => {
   };
 };
 
-export { mix };
+export { mix, calcPotionUnit };
