@@ -2,16 +2,19 @@
   "name": "kemia",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "scripts": {
     "start": "ts-node-dev --respawn src/index.ts",
+    "build": "tsc --build tsconfig.json",
     "test": "ava src",
     "test:w": "ava src --watch",
     "coverage": "c8 ava"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["mo2", "alchemy"],
+  "author": "Zetos Lima",
   "license": "MIT",
+  "files": ["dist"],
   "devDependencies": {
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
