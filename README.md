@@ -1,6 +1,8 @@
-# Kemia
+![paracelso](./media/paracelso.jpg)
 
-Kemia is a calculator for potion making on the game [Mortal Online 2](https://www.mortalonline2.com/). It calculates the *Potion Direct Healing* and the *Potion Units* based on the input `recipe`. Theres no recipes or ingredient information other than the public disclosed on the `index.test.ts` file, this is just a tool to help the alchemy exploration.
+---
+
+**Kemia** is a calculator for potion making on the game [Mortal Online 2](https://www.mortalonline2.com/). It calculates the *Potion Direct Healing* and the *Potion Units* based on the input `recipe`. Theres no recipes or ingredient information other than the public disclosed on the `index.test.ts` file, this is just a tool to help the alchemy exploration.
 
 > **Notes:**
 > - Kemia assumes that you have the *Herbology*, *Alchemy*, *Potion Making* and *Advanced Potion Making* lores at 100.
@@ -39,7 +41,7 @@ mix(rcp3); // output: { pdh: 2.508, pu: 1 }
 
 ```
 
-## Bibliography
+## References
 
 - [Alchemy for the Masses](https://www.starvault.se/mortalforums/threads/alchemy-for-the-masses.91285/)
 - [Alchemy Demystified](https://mortalonline2.com/forums/threads/alchemy-demystified.3348/)
