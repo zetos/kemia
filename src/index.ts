@@ -40,32 +40,23 @@ const calcTotalMultipliers = (recipe: Ingredient[], dissolution: number) =>
     0
   );
 
-const calcDirectHealing = (
-  recipe: Ingredient[],
-  dissolution: number
-): number => {
-  const herbalismFactor = (5 / 3) * 1.2; // 2
-  const totalDH = recipe.reduce(
-    (acc, cur) => acc + cur.pdh * (cur.qtd / dissolution),
-    0
-  );
+const calcDirectHealing = (recipe: Ingredient[], dissolution: number): number =>
+  Box(recipe)
+    .map((rcp) =>
+      rcp.reduce((acc, cur) => acc + cur.pdh * (cur.qtd / dissolution), 0)
+    )
+    .fold((totalDH) => (5 / 3) * 1.2 * totalDH);
+//   herbalismFactor = (5 / 3) * 1.2; // 2
 
-  return herbalismFactor * totalDH;
-};
-
-const mix = (recipe: Ingredient[]): Potion => {
-  const totalDissolution = calcTotalDissolution(recipe);
-
-  const totalMultipliers = calcTotalMultipliers(recipe, totalDissolution);
-
-  const calcDH = calcDirectHealing(recipe, totalDissolution);
-
-  return {
-    pdh: Number(
-      (calcDH * (totalMultipliers ? totalMultipliers : 1)).toFixed(3)
-    ),
-    pu: calcPotionUnit(recipe),
-  };
-};
+const mix = (recipe: Ingredient[]): Potion =>
+  Box(calcTotalDissolution(recipe))
+    .chain((totalDissolution) =>
+      Box(calcDirectHealing(recipe, totalDissolution)).chain((totalDH) =>
+        Box(calcTotalMultipliers(recipe, totalDissolution)).map((totalMult) =>
+          Number((totalDH * (totalMult ? totalMult : 1)).toFixed(3))
+        )
+      )
+    )
+    .fold((pdh) => ({ pdh, pu: calcPotionUnit(recipe) }));
 
 export { mix, calcPotionUnit };
