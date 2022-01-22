@@ -9,7 +9,8 @@
     "build": "tsc --build tsconfig.json",
     "test": "ava src",
     "test:w": "ava src --watch",
-    "coverage": "c8 ava"
+    "coverage": "c8 ava",
+    "prepare": "husky install"
   },
   "keywords": [
     "mo2",
