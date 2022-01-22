@@ -38,8 +38,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm test",
-      "pre-push": "npm run test:all"
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "npm run test"
     }
   },
   "ava": {
