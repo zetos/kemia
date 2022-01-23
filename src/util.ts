@@ -1,19 +1,17 @@
-const pipe = <T extends unknown[], U>(
-  fn1: (...args: T) => U,
-  ...fns: Array<(a: U) => U>
-): ((...args: T) => U) => {
-  const piped = fns.reduce(
-    (prevFn, nextFn) => (value: U) => nextFn(prevFn(value)),
-    (value) => value
-  );
-  return (...args: T) => piped(fn1(...args));
+type Functor<T> = {
+  map: <U>(f: (y: T) => U) => Functor<U>;
+  chain: <U>(f: (y: T) => U) => U;
+  fold: <U>(f: (y: T) => U) => U;
+  toString: string;
 };
 
-const Box = <T>(arg: T) => ({
-  map: <U>(fn: (x: T) => U) => Box(fn(arg)),
-  fold: <U>(fn: (x: T) => U) => fn(arg),
-  chain: <U>(fn: (x: T) => U) => fn(arg),
+type Box = <T>(x: T) => Functor<T>;
+
+const Box: Box = (arg) => ({
+  map: (fn) => Box(fn(arg)),
+  fold: (fn) => fn(arg),
+  chain: (fn) => fn(arg), //Box(Box(x))
   toString: `Box(${arg})`,
 });
 
-export { pipe, Box };
+export { Box };
