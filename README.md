@@ -37,7 +37,7 @@ const recipe = [
   },
 ];
 
-mix(rcp3); // output: { pdh: 2.508, pu: 1 }
+mix(recipe); // output: { pdh: 2.508, pu: 1 }
 
 ```
 
